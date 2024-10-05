@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+input[type="text"], input[type="datetime-local"] {
+    margin: 5px;
+}

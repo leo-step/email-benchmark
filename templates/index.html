@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Labeling Interface</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        pre {
+            white-space: pre-wrap;  /* This will allow the text to wrap */
+            word-wrap: break-word;  /* This ensures long words are broken up if needed */
+        }
+    </style>
+    <script>
+        function addEventFields() {
+            const container = document.getElementById('events-container');
+            const eventDiv = document.createElement('div');
+
+            eventDiv.innerHTML = `
+                <input type="text" name="events[]" placeholder="Event Name" required>
+                <input type="datetime-local" name="start_datetimes[]" required>
+                <input type="datetime-local" name="end_datetimes[]" required>
+                <button type="button" onclick="this.parentElement.remove()">Remove</button>
+                <br><br>
+            `;
+            container.appendChild(eventDiv);
+        }
+    </script>
+</head>
+<body>
+    <h1>Email Labeling Interface</h1>
+    <p><strong>Date:</strong> {{ email_date }}</p>
+    <pre>{{ email.text }}</pre>
+
+    <form method="post" action="{{ url_for('label') }}">
+        <input type="hidden" name="email_id" value="{{ email.id }}">
+
+        <div id="events-container">
+            <!-- Event fields will be added here -->
+        </div>
+        <button type="button" onclick="addEventFields()">Add Event</button>
+        <br><br>
+        <button type="submit" name="action" value="label">Save Labels</button>
+        <button type="submit" name="action" value="discard">Discard Email</button>
+    </form>
+</body>
+</html>
