@@ -6,17 +6,19 @@ import json
 
 app = Flask(__name__)
 
+split = "train"
+
 # Ensure the database file is created in a 'data' directory
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data', 'train.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data', split + '.db')
 
 db.init_app(app)
 
 # Create the database if it doesn't exist
 with app.app_context():
-    if not os.path.exists(os.path.join(basedir, 'data', 'train.db')):
+    if not os.path.exists(os.path.join(basedir, 'data', split + '.db')):
         db.create_all()  # This will create the tables based on your models
-        with open('data/train.json') as f:
+        with open(f'data/{split}.json') as f:
             emails = json.load(f)
 
             for item in emails:
